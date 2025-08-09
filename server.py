@@ -86,11 +86,16 @@ class DarwinHTTPRequestHandler(SimpleHTTPRequestHandler):
             species_name = data.get('speciesName')
             test_mode = data.get('testMode', False)
             
-            print(f"Búsqueda completa de especie: {species_name} (test_mode: {test_mode})")
+            print(f"[WEB] Búsqueda completa de especie: {species_name} (test_mode: {test_mode})")
+            print(f"[WEB] Iniciando procesamiento con Gemini...")
             
             processor = SpeciesProcessor()
             # Cambiar esta línea para usar el método correcto con Gemini
             result = processor.search_species_complete_with_gemini(species_name)
+            
+            print(f"[WEB] Resultado obtenido: {result.get('success', False)}")
+            if not result.get('success', False):
+                print(f"[WEB] Error en resultado: {result.get('error', 'Sin error específico')}")
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -101,7 +106,9 @@ class DarwinHTTPRequestHandler(SimpleHTTPRequestHandler):
             self.wfile.write(response.encode('utf-8'))
             
         except Exception as e:
-            print(f"Error en búsqueda completa de especies: {e}")
+            print(f"[WEB] Error en búsqueda completa de especies: {e}")
+            import traceback
+            traceback.print_exc()
             self.send_error(500, f"Internal Server Error: {str(e)}")
     
     def do_OPTIONS(self):
