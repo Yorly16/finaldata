@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darwin Foundation Data Scraper</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-leaf"></i> Darwin Foundation Data Scraper</h1>
+            <p>Descarga archivos PDF organizados por categorías desde el archivo de listas de verificación de la Fundación Darwin</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Panel de Categorías -->
+            <div class="categories-panel">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-folder"></i> Categorías Principales</h2>
+                        <p>Selecciona una categoría para ver sus subcategorías</p>
+                    </div>
+                    <div class="categories-list" id="categoriesList">
+                        <!-- Las categorías se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Subcategorías -->
+            <div class="subcategories-panel">
+                <div class="panel-card" id="subcategoriesPanel">
+                    <div class="empty-state">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Selecciona una categoría para ver las subcategorías disponibles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de progreso -->
+        <div class="modal" id="progressModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Descargando PDFs</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="progress-info">
+                        <p id="progressText">Iniciando descarga...</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="download-stats" id="downloadStats">
+                            <span>Archivos encontrados: <strong id="filesFound">0</strong></span>
+                            <span>Descargados: <strong id="filesDownloaded">0</strong></span>
+                        </div>
+                    </div>
+                    <div class="logs" id="downloadLogs"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
