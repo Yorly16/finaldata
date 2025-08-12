@@ -9,8 +9,13 @@ from darwin_scraper import DarwinScraper
 class SpeciesProcessor:
     def __init__(self):
         self.scraper = DarwinScraper()
-        # IMPORTANTE: Reemplaza con tu clave real de Google Gemini
-        self.gemini_api_key = "AIzaSyB5r4LUJIwWmU7Cj8uN9Q51vjANLr6H0MY"  
+        # Usar variable de entorno para la API key
+        self.gemini_api_key = os.environ.get('GEMINI_API_KEY')
+        if not self.gemini_api_key:
+            print("[WARNING] GEMINI_API_KEY no está configurada. Funcionalidad de Gemini deshabilitada.")
+            self.gemini_api_key = None
+        else:
+            print(f"[LOG] API Key configurada: {self.gemini_api_key[:10]}...")
         self.gemini_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"
     
     def read_csv_with_encoding(self, csv_path):
@@ -33,6 +38,10 @@ class SpeciesProcessor:
 
     def analyze_csv_with_gemini(self, csv_path, species_name):
         """Analiza el CSV usando Google Gemini API para extraer información de especies"""
+        if not self.gemini_api_key:
+            print("[ERROR] API Key de Gemini no configurada. Usando búsqueda simple.")
+            return self.search_csv_simple(csv_path, species_name)
+        
         try:
             print(f"[GEMINI] Iniciando análisis para: {species_name}")
             print(f"[GEMINI] API Key configurada: {self.gemini_api_key[:10]}...")

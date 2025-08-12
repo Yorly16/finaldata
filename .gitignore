@@ -41,6 +41,11 @@ Thumbs.db
 downloads/
 .vercel/
 
-# API Keys (if you have a config file)
-config.py
+# API Keys y configuración sensible
 .env
+config.py
+*.key
+
+# Archivos temporales de desarrollo
+*.log
+test_*.py

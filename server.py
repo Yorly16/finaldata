@@ -118,21 +118,9 @@ class DarwinHTTPRequestHandler(SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
 
-def run_server(port=8000):
-    server_address = ('', port)
-    httpd = HTTPServer(server_address, DarwinHTTPRequestHandler)
-    print(f"Servidor iniciado en http://localhost:{port}")
-    print("Presiona Ctrl+C para detener el servidor")
-    
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print("\nDeteniendo servidor...")
-        httpd.server_close()
-
 if __name__ == '__main__':
-    port = 8000
-    if len(sys.argv) > 1:
-        port = int(sys.argv[1])
-    
-    run_server(port)
+    import os
+    port = int(os.environ.get('PORT', 8000))
+    server = HTTPServer(('0.0.0.0', port), DarwinHTTPRequestHandler)
+    print(f"Server running on port {port}")
+    server.serve_forever()
